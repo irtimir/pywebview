@@ -220,8 +220,8 @@ class BrowserView(QMainWindow):
         self._file_name_semaphore = Semaphore(0)
         self._current_url_semaphore = Semaphore(0)
 
-        self.loaded = window.loaded
-        self.shown = window.shown
+        self.loaded = window.on_loaded
+        self.shown = window.on_shown
 
         self.localization = window.localization
 
@@ -378,7 +378,7 @@ class BrowserView(QMainWindow):
                 event.ignore()
                 return
 
-        should_cancel = self.pywebview_window.closing.set()
+        should_cancel = self.pywebview_window.on_closing.set()
 
         if should_cancel:
             event.ignore()
@@ -391,7 +391,7 @@ class BrowserView(QMainWindow):
         if self.pywebview_window in windows:
             windows.remove(self.pywebview_window)
 
-        self.pywebview_window.closed.set()
+        self.pywebview_window.on_closed.set()
 
         if len(BrowserView.instances) == 0:
             self.hide()
