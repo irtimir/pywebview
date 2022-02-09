@@ -114,7 +114,7 @@ class MSHTML:
 
     def load_html(self, content, base_uri):
         self.web_browser.DocumentText = inject_base_uri(content, base_uri)
-        self.pywebview_window.on_loaded.clear()
+        self.pywebview_window.events.loaded.clear()
 
     def load_url(self, url):
         self.web_browser.Navigate(url)
@@ -164,7 +164,7 @@ class MSHTML:
 
         if not self.pywebview_window.text_select:
             document.InvokeScript('eval', (disable_text_select,))
-        self.pywebview_window.on_loaded.set()
+        self.pywebview_window.events.loaded.set()
 
         if self.pywebview_window.easy_drag:
             document.MouseMove += self.on_mouse_move
